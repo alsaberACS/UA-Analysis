@@ -1,0 +1,89 @@
+#---------------Libraries-------------- (Step 1)
+library(finalfit)
+library(Hmisc)
+library(dplyr)
+library(ggplot2)
+library(tibble)
+library(readxl)
+library(data.table)
+library(lubridate)
+library(eeptools) 
+library(zoo)
+library(magrittr)
+library(tibble)
+library(compareGroups)
+library(data.table)
+library(qwraps2)
+library(readxl)
+library(plyr)
+library(xlsxjars)
+library(rJava)
+library(psych)
+library(gdata)
+library(expss)
+library(Hmisc)
+library(foreign)
+#---------------Loading Data---------- (Step 2)
+UA <- read.spss("UAD Study Corrected.sav", use.value.label=TRUE, to.data.frame=TRUE)
+#---------------Coding Baseline factors---------- (Step 3)
+
+UA$RF1 <- ifelse(UA$Record == "Baseline", UA$RF, NA)
+UA$DOD.years1 <- ifelse(UA$Record == "Baseline", UA$DOD.years, NA)
+UA$AGE.years1 <- ifelse(UA$Record == "Baseline", UA$AGE.years, NA)
+UA$Gender1 <- ifelse(UA$Record == "Baseline", UA$Gender, NA)
+UA$Current1 <- ifelse(UA$Record == "Baseline", UA$Current, NA)
+UA$CCP1 <- ifelse(UA$Record == "Baseline", UA$CCP, NA)
+UA$ANA1 <- ifelse(UA$Record == "Baseline", UA$ANA, NA)
+UA$Nodules1 <- ifelse(UA$Record == "Baseline", UA$Nodules, NA)
+UA$SICCA1 <- ifelse(UA$Record == "Baseline", UA$SICCA, NA)
+UA$Smoking1 <- ifelse(UA$Record == "Baseline", UA$Smoking, NA)
+UA$Family_History1 <- ifelse(UA$Record == "Baseline", UA$Family_History, NA)
+UA$Nationality1 <- ifelse(UA$Record == "Baseline", UA$Nationality, NA)
+
+
+UA$RF1 <- factor(UA$RF1,
+          levels = c(1,2),
+          labels = c("Negative", "Positive"))
+UA$Gender1 <- factor(UA$Gender1,
+                 levels = c(1,2),
+                 labels = c("female", "male"))
+UA$Current1 <- factor(UA$Current1,
+                     levels = c(1,2),
+                     labels = c("No", "Yes"))
+UA$CCP1 <- factor(UA$CCP1,
+                      levels = c(1,2),
+                      labels = c("Negative", "Positive"))
+UA$ANA1 <- factor(UA$ANA1,
+                  levels = c(1,2),
+                  labels = c("Negative", "Positive"))
+UA$Nodules1 <- factor(UA$Nodules1,
+                  levels = c(1,2),
+                  labels = c("No", "Yes"))
+UA$SICCA1 <- factor(UA$SICCA1,
+                      levels = c(1,2),
+                      labels = c("No", "Yes"))
+UA$Smoking1 <- factor(UA$Smoking1,
+                    levels = c(1,2),
+                    labels = c("No", "Yes"))
+UA$Family_History1 <- factor(UA$Family_History1,
+                      levels = c(1,2),
+                      labels = c("Negative", "Positive"))
+UA$Nationality1 <- factor(UA$Nationality1,
+                             levels = c(1,2),
+                             labels = c("Kuwaiti's", "non-Kuwaiti's"))
+
+#---------------GLM Model---------- (Step 3)
+explanatory = c("VAS","ESR", "CRP", "HAQ", "Patient.s.Global.Assessment", "Physician.s.Global.Assessment",
+                "SDAI", "CDAI", "Uric.acid", "DOD.years1", "AGE.years1", "Tender", "Swollen", "Gender1", 
+                "Current1", "RF1", "CCP1", "ANA1", "Nodules1", "SICCA1", "Smoking1", "Family_History1", "Asthma", 
+                "Nationality1", "onbio", "Bio_Mono", "DM", "CAD", "Hyperlipidemia", "Hypertension")
+dependent = "DAS28_Group"
+
+  Table1 <- summary_factorlist(UA, dependent, explanatory, p=TRUE)
+  Table2 <- summary_factorlist(UA, dependent, explanatory, p=TRUE)
+
+#---------------GLM Model---------- (Step 3)
+#glm(depdendent3 ~ explanatory3, family="binomial")
+
+  Table3 <- finalfit(UA, dependent, explanatory, na_include=TRUE)
+  Table4 <- finalfit(UA,dependent, explanatory, p=TRUE)
