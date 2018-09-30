@@ -1,0 +1,22 @@
+---
+title: "Results"
+author: "Dr. Adeeba Project"
+date: "9/30/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+```
+
+```{r load myData, include=FALSE}
+load("UA2018.RData")
+```
+
+## R Markdown
+
+```{r setup, echo=FALSE, results="asis"}
+knitr::kable(Table1)
+```

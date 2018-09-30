@@ -27,6 +27,7 @@ library(gdata)
 library(expss)
 library(Hmisc)
 library(foreign)
+library(xlsx)
 #---------------Loading Data---------- (Step 2)
 UA <- read.spss("UAD Study Corrected.sav", use.value.label=TRUE, to.data.frame=TRUE)
 #---------------Coding Baseline factors---------- (Step 3)
@@ -148,3 +149,7 @@ dependent = "UA_Group"
     
     select(-c(fit_id, index)) %>% # remove unnecessary columns
     dependent_label(colon_s, dependent, prefix="") -> Table9 # place dependent variable label
+  #---------------saving tables---------- (Step 9)
+  write.xlsx(Table1, file = "table1.xlsx", 
+             sheetName="MTCARS", append=TRUE)
+  
