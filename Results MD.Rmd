@@ -2,7 +2,9 @@
 title: "Results"
 author: "Dr. Adeeba Project"
 date: "9/30/2018"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -11,12 +13,34 @@ knitr::opts_chunk$set(
   comment = "#>")
 ```
 
+
 ```{r load myData, include=FALSE}
 load("UA2018.RData")
 ```
 
-## R Markdown
+## Comparing between Low and high level of DAS28 using Chi-Square test
 
-```{r setup, echo=FALSE, results="asis"}
+```{r, echo = FALSE}
 knitr::kable(Table1)
 ```
+
+## Comparing between Low and high level of UA using Chi-Square test
+
+```{r, echo = FALSE}
+knitr::kable(Table2)
+```
+
+## GLM to Measure the effect from Rhuematiod factors on the levels of DAS28 Using Uni and Multivariate analysis
+
+```{r, echo = FALSE}
+knitr::kable(Table3)
+```
+
+## GLM to Measure the effect from Rhuematiod factors on the levels of UA Using Uni and Multivariate analysis
+
+```{r, echo = FALSE}
+knitr::kable(Table4)
+```
+
+
+
